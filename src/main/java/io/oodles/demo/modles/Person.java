@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
-
+//@entity if data add in sqldb then add jpa dep.  starter
 @Document(collection = "oodlesPerson") //woring with mongodb database use documents
 public @Data class Person {
 	@Id

@@ -7,5 +7,6 @@ import io.oodles.demo.modles.Person;
 
 @Repository
 public interface PersonRepository extends MongoRepository<Person, String> {
-
+//provides methods to work with database
 }
+
