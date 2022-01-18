@@ -15,4 +15,6 @@ public @Data class Person {
 	private String gender;
 	private String phone;
 	private double income;
+	private String password;
+	private int otp;
 }
