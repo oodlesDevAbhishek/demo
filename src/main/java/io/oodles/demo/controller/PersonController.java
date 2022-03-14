@@ -1,9 +1,11 @@
 package io.oodles.demo.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.oodles.demo.modles.Person;
+import io.oodles.demo.modles.PersonPage;
 import io.oodles.demo.repo.PersonRepository;
 @RestController//Restcontroller =Contorller+ResponseBody
 @RequestMapping("/api/personinfo")
@@ -32,12 +35,13 @@ public class PersonController {
 	
 	//Read Handler 
 	@GetMapping("/showpersoninfo")//is the combination of @ResquestMapping(value="/showpersoninfo" ,method=RequestMethod.GET)
-	public ResponseEntity <?> getAllPerson(){
+	public ResponseEntity <?> getAllPerson(PersonPage personPage){
 		
-		List<Person> personList = personrepo.findAll();
+		Pageable pageable = PageRequest.of(personPage.getPageNumber(),personPage.getPageSize());
+		Page<Person> personList = personrepo.findAll(pageable);
 		
-		if(personList.size() > 0) {
-			return new ResponseEntity<List<Person>>(personList ,HttpStatus.OK);
+		if(personList.getSize() > 0) {
+			return new ResponseEntity<Page<Person>>(personList ,HttpStatus.OK);
 		}
 		else
 			return new ResponseEntity<>("NO RECORD FOUND" ,HttpStatus.NOT_FOUND);	
